@@ -3,9 +3,10 @@ import React from 'react';
 export default function TeachingsSection() {
   // Updated to show the exact lineage in chronological order
   const lineage = [
-    { name: "Sri Sathyanandha Maharshi", title: "Founder", image: "/satyananda.jpg" },
+    { name: "Sri Satyanandha Maharshi", title: "Founder", image: "/satyananda.jpg" },
     { name: "Sri Brahmanandha Swamy", title: "First Successor", image: "/brahmananda.jpg" },
-    { name: "SriHari Swamy", title: "Current Peethadhipathi", image: "/srihari.jpg" }
+    { name: "SriHari Swamy", title: "Current Peethadhipathi", image: "/srihari.jpg" },
+    { name: "Sri Swami Satyasangananda", title: "Current Peethadhipathi", image: "/satyasangananda.jpg" }
   ];
 
   return (

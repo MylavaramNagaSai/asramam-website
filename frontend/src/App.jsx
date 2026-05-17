@@ -1,51 +1,41 @@
-import Navbar from './components/Navbar'
-import FloatingOms from './components/FloatingOms'
-import HeroCarousel from './components/HeroCarousel'
-import DashboardGrid from './components/DashboardGrid'
-import LatestUpdates from './components/LatestUpdates'
-import TeachingsSection from './components/TeachingsSection'
-import MediaLibrary from './components/MediaLibrary'
-import Infrastructure from './components/Infrastructure'
-import Branches from './components/Branches'
-import Footer from './components/Footer'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// We create a reusable orange line divider right here
-const SectionDivider = () => (
-  <div className="max-w-7xl mx-auto px-4 my-2 relative z-10">
-    <div className="h-px w-full bg-orange-200/80"></div>
-  </div>
-);
+// Global Components (These show on EVERY page)
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import FloatingOms from './components/FloatingOms';
+
+// Pages
+import Home from './pages/Home';
+import GenericPage from './pages/GenericPage';
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#FFFBF7] relative">
-      <FloatingOms /> 
-      <Navbar />
-      
-      <main className="relative z-10 pb-10">
-        <HeroCarousel />
+    <Router>
+      <div className="min-h-screen bg-[#FFFBF7] relative font-sans flex flex-col">
         
-        <DashboardGrid />
+        {/* Global Background Elements & Header */}
+        <FloatingOms /> 
+        <Navbar />
         
-        <SectionDivider />
-        <LatestUpdates />
-        
-       
-        <TeachingsSection />
-        <SectionDivider />
-        <MediaLibrary />
-        <br></br>
-        <SectionDivider />
-        <Infrastructure />
-        <br></br>
-        <SectionDivider />
-        <Branches />
-        
-      </main>
+        {/* Main Content Area (This swaps out based on the URL) */}
+        <div className="flex-grow">
+          <Routes>
+            {/* The Main Homepage */}
+            <Route path="/" element={<Home />} />
+            
+            {/* The Wildcard Route for all Navbar Dropdown links */}
+            <Route path="/:pageName" element={<GenericPage />} />
+          </Routes>
+        </div>
 
-      <Footer />
-    </div>
-  )
+        {/* Global Footer */}
+        <Footer />
+        
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;

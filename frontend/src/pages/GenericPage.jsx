@@ -1,41 +1,30 @@
 import React from 'react';
-import HeroCarousel from '../components/HeroCarousel';
-import DashboardGrid from '../components/DashboardGrid';
-import LatestUpdates from '../components/LatestUpdates';
-import TeachingsSection from '../components/TeachingsSection';
-import MediaLibrary from '../components/MediaLibrary';
-import Infrastructure from '../components/Infrastructure';
-import Branches from '../components/Branches';
+import { useLocation } from 'react-router-dom';
 
-// Reusable orange line divider
-const SectionDivider = () => (
-  <div className="max-w-7xl mx-auto px-4 my-2 relative z-10">
-    <div className="h-px w-full bg-orange-200/80"></div>
-  </div>
-);
+export default function GenericPage() {
+  const location = useLocation();
+  
+  // This takes the URL (like "/asramam-history") and turns it into a readable title ("Asramam History")
+  const pageTitle = location.pathname
+    .replace('/', '')
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 
-export default function Home() {
   return (
-    <main className="relative z-10 pb-10">
-      <HeroCarousel />
+    <div className="max-w-7xl mx-auto px-4 py-12 min-h-[60vh]">
+      <h1 className="text-3xl md:text-5xl font-extrabold text-orange-950 text-center mb-8 border-b-2 border-orange-200 pb-4 glow-text">
+        <span className="text-orange-600 mr-2">ॐ</span>
+        {pageTitle || 'Page'}
+        <span className="text-orange-600 ml-2">ॐ</span>
+      </h1>
       
-      <DashboardGrid />
-      
-      <SectionDivider />
-      <LatestUpdates />
-      
-      <TeachingsSection />
-      
-      <SectionDivider />
-      <MediaLibrary />
-      <br />
-      
-      <SectionDivider />
-      <Infrastructure />
-      <br />
-      
-      <SectionDivider />
-      <Branches />
-    </main>
+      <div className="bg-white rounded-xl shadow-lg border border-orange-100 p-6 md:p-10 flex items-center justify-center min-h-[40vh]">
+        <p className="text-orange-800/60 text-xl font-medium text-center leading-relaxed">
+          Divine content for <strong className="text-orange-950">{pageTitle}</strong> is currently being updated. <br/>
+          Please check back soon.
+        </p>
+      </div>
+    </div>
   );
 }

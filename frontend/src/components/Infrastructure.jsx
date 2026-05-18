@@ -14,19 +14,19 @@ export default function Infrastructure() {
       id: 2,
       name: "Adhistana Mandiram",
       purpose: "Sacred Resting Place",
-      img: "/asramam2.jpg" // Using local images so they don't break
+      img: "/asramam4.jpg" // Using local images so they don't break
     },
     {
       id: 3,
-      name: "Sri Goshala",
+      name: "Goshala",
       purpose: "Cow Shelter & Care",
-      img: "/asramam3.jpg"
+      img: "/goshala.png"
     },
     {
       id: 4,
-      name: "Veda Patashala",
-      purpose: "Spiritual Education Center",
-      img: "/asramam4.jpg"
+      name: "Annapoorna Bhavanam",
+      purpose: "Features spacious corridors and dedicated facilities for devotees.",
+      img: "/annapoorna-bhavanam.png"
     }
   ];
 

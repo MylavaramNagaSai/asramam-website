@@ -6,7 +6,7 @@ export default function TeachingsSection() {
     { name: "Sri Satyanandha Maharshi", title: "Founder", image: "/satyananda.jpg" },
     { name: "Sri Brahmanandha Swamy", title: "First Successor", image: "/brahmananda.jpg" },
     { name: "SriHari Swamy", title: "Current Peethadhipathi", image: "/srihari.jpg" },
-    { name: "Sri Swami Satyasangananda", title: "Current Peethadhipathi", image: "/satyasangananda.jpg" }
+    { name: "Purushottam Teertha Swamy", title: "Current Peethadhipathi", image: "/purushottam.jpg" }
   ];
 
   return (

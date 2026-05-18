@@ -43,7 +43,7 @@ export default function LatestUpdates() {
       
       {/* SECTION 1: The Scrolling Flash News Ticker */}
       <div className="flex items-center bg-white border border-orange-200 rounded-lg shadow-sm overflow-hidden mb-10">
-        <div className="bg-orange-600 text-white px-4 py-3 flex items-center gap-2 font-bold z-10 shadow-md whitespace-nowrap">
+        <div className="bg-orange-600 text-white px-4 py-3 flex items-center gap-2 font-bold z-10 shadow-md whitespace-nowrap relative">
           <Bell size={18} className="animate-pulse" />
           <span>Flash News</span>
         </div>
@@ -53,7 +53,7 @@ export default function LatestUpdates() {
             animate={{ x: ["0%", "-50%"] }}
             transition={{
               ease: "linear",
-              duration: 25, // Scrolling speed
+              duration: 80, // CHANGED TO 350: Ultra-slow creeping speed for perfect readability
               repeat: Infinity,
             }}
           >

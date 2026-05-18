@@ -28,9 +28,10 @@ import DarshanTimings from './pages/DarshanTimings';
 import SpiritualBooks from './pages/SpiritualBooks'; 
 import AudioArchives from './pages/AudioArchives'; 
 import ViswaMimamsaMagazine from './pages/ViswaMimamsaMagazine'; // <-- ADD THIS// <-- ADD THIS// <-- ADD THIS EXACT LINE
+import Committees from './pages/Committees';
+import RouteMap from './pages/RouteMap';
+import AllAsramamImages from './pages/AllAsramamImages';
 
-// <-- ADD THIS
-// // <-- ADD THIS // <-- ADD THIS// <-- ADD THIS // <-- ADD THIS
 
 function App() {
   return (
@@ -67,6 +68,10 @@ function App() {
             <Route path="/spiritual-books" element={<SpiritualBooks />} />
             <Route path="/audio-archives" element={<AudioArchives />} />
             <Route path="/sri-viswa-mimamsa-monthly-(magazine)" element={<ViswaMimamsaMagazine />} />
+            <Route path="/committees" element={<Committees />} />
+            <Route path="/route-map" element={<RouteMap />} />
+            <Route path="/all-asramam-images" element={<AllAsramamImages />} />
+            
             {/* The Wildcard Route for all other dropdown links */}
             <Route path="/:pageName" element={<GenericPage />} />
 

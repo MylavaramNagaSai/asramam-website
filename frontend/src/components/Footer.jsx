@@ -1,5 +1,4 @@
 import React from 'react';
-// We removed Facebook, Instagram, and Youtube from this import list!
 import { MapPin, Phone, Mail, ArrowRight, MessageCircle, Users } from 'lucide-react';
 
 export default function Footer() {
@@ -13,10 +12,10 @@ export default function Footer() {
           {/* Column 1: About Asramam */}
           <div>
             <h2 className="text-2xl font-bold text-white flex items-center gap-2 mb-6">
-              <span className="text-orange-500">ॐ</span> Sri Satyanandasramam
+              <span className="text-orange-500">ॐ</span> Sri Sathyanandha Asramam
             </h2>
             <p className="text-sm leading-relaxed mb-6">
-              Established in 1935, our Asramam is dedicated to the divine teachings of Sri Satyananda Maharshi. We serve as a spiritual haven for devotees seeking peace, inner knowledge, and the path of selfless service through Bakthi, Meditation & Devotion and Gosamrakshana.
+              Established in 1935, our Asramam is dedicated to the divine teachings of Sri Sathyanandha Maharshi. We serve as a spiritual haven for devotees seeking peace, inner knowledge, and the path of selfless service through Nithya Annadanam and Gosamrakshana.
             </p>
             <a href="/about" className="text-orange-500 font-bold hover:text-orange-400 flex items-center gap-1 transition-colors text-sm">
               Read Full History <ArrowRight size={16} />
@@ -30,19 +29,18 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="text-orange-500 flex-shrink-0 mt-1" size={18} />
                 <p>
-                  Sri Satyanandasramam,<br />
+                  Sri Sathyanandha Asramam,<br />
                   Inamadugu Village, Kovur Mandal,<br />
-                  Nellore District, Andhra Pradesh, INDIA <br />
-                  Pin Code - 524137
+                  Nellore District, Andhra Pradesh - 524137
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="text-orange-500 flex-shrink-0" size={18} />
-                <p>+91 94402 79712</p>
+                <p>+91 98765 43210</p>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="text-orange-500 flex-shrink-0" size={18} />
-                <p>contact@srisatyanandasramam.org.in</p>
+                <p>info@srisathyanandhaasramam.org</p>
               </div>
             </div>
           </div>
@@ -129,19 +127,30 @@ export default function Footer() {
 
         {/* Bottom Section: Copyright & Credits */}
         <div className="border-t border-orange-900/50 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
-          <div className="flex gap-4 text-orange-600">
+          
+          <div className="flex gap-4 text-orange-600 flex-1">
             <a href="#" className="hover:text-orange-400 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-orange-400 transition-colors">Terms of Service</a>
             <a href="#" className="hover:text-orange-400 transition-colors">Refund Policy</a>
           </div>
           
-          <div className="text-orange-500/80">
-            Designed & Developed by <span className="text-orange-400 font-bold">Mylavaram Naga Sai</span>
+          {/* UPDATED: Increased size and made your name a clickable link */}
+          <div className="text-orange-500/80 text-sm md:text-base flex-1 text-center">
+            Designed & Developed by{' '}
+            <a 
+              href="https://www.mylavaramsai.me/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-orange-400 font-extrabold hover:text-orange-300 hover:underline underline-offset-4 transition-all"
+            >
+              Mylavaram Naga Sai
+            </a>
           </div>
 
-          <div className="text-orange-600">
+          <div className="text-orange-600 flex-1 text-right">
             &copy; 2026 Sri Sathyanandha Asramam. All Rights Reserved.
           </div>
+          
         </div>
 
       </div>

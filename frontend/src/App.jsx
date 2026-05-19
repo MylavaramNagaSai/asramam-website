@@ -5,13 +5,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FloatingOms from './components/FloatingOms';
+import VisitorCounter from './components/VisitorCounter';
 
 // Pages
 import Home from './pages/Home';
 import GenericPage from './pages/GenericPage';
 import AsramamHistory from './pages/AsramamHistory'; 
 import FounderProfile from './pages/FounderProfile';
-import DailySchedule from './pages/DailySchedule';// 
+import DailySchedule from './pages/DailySchedule';
 import DevoteeAccommodation from './pages/DevoteeAccommodation'; 
 import Goshala from './pages/Goshala';
 import JagadambaMahadevi from './pages/JagadambaMahadevi';
@@ -27,16 +28,23 @@ import AdhistanaMandiram from './pages/AdhistanaMandiram';
 import DarshanTimings from './pages/DarshanTimings';
 import SpiritualBooks from './pages/SpiritualBooks'; 
 import AudioArchives from './pages/AudioArchives'; 
-import ViswaMimamsaMagazine from './pages/ViswaMimamsaMagazine'; // <-- ADD THIS// <-- ADD THIS// <-- ADD THIS EXACT LINE
+import ViswaMimamsaMagazine from './pages/ViswaMimamsaMagazine';
 import Committees from './pages/Committees';
 import RouteMap from './pages/RouteMap';
 import AllAsramamImages from './pages/AllAsramamImages';
+import MaharshiAnnaprasadam from './pages/MaharshiAnnaprasadam';
+import SriTarakeswara from './pages/SriTarakeswara';
+import UpcomingFestivals from './pages/UpcomingFestivals';
+import EHundi from './pages/EHundi';
+import AnnadanamTrust from './pages/AnnadanamTrust';
+import GosalaTrust from './pages/GosalaTrust';
+import ContactUs from './pages/ContactUs';
 
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-[#FFFBF7] relative font-sans flex flex-col">
+      <div className="min-h-screen relative font-sans flex flex-col">
         
         {/* Global Background Elements & Header */}
         <FloatingOms /> 
@@ -45,10 +53,7 @@ function App() {
         {/* Main Content Area */}
         <div className="flex-grow">
           <Routes>
-            {/* The Main Homepage */}
             <Route path="/" element={<Home />} />
-            
-            {/* The Specific Asramam History Page */}
             <Route path="/asramam-history" element={<AsramamHistory />} />
             <Route path="/founder-profile" element={<FounderProfile />} />
             <Route path="/daily-schedule" element={<DailySchedule />} />
@@ -71,14 +76,21 @@ function App() {
             <Route path="/committees" element={<Committees />} />
             <Route path="/route-map" element={<RouteMap />} />
             <Route path="/all-asramam-images" element={<AllAsramamImages />} />
-            
-            {/* The Wildcard Route for all other dropdown links */}
             <Route path="/:pageName" element={<GenericPage />} />
+            <Route path="/dining" element={<MaharshiAnnaprasadam />} />
+            <Route path="/sri-tarakeswara-swami" element={<SriTarakeswara />} />
+            <Route path="/upcoming-festivals" element={<UpcomingFestivals />} />
+            <Route path="/e-hundi" element={<EHundi />} />
+            <Route path="/annadanam-trust" element={<AnnadanamTrust />} />
+            <Route path="/gosala-trust" element={<GosalaTrust />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+
 
           </Routes>
         </div>
 
-        {/* Global Footer */}
+        {/* Global Footer Components */}
+        <VisitorCounter />
         <Footer />
         
       </div>

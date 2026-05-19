@@ -6,8 +6,17 @@ import { Link } from 'react-router-dom';
 /* =========================================
    DESKTOP COMPONENTS
    ========================================= */
-const NestedMenuItem = ({ item }) => {
+const NestedMenuItem = ({ item, parentTitle }) => {
   const [isSubOpen, setIsSubOpen] = useState(false);
+  
+  // Check if this menu belongs to the Gallery tab
+  const isGallery = parentTitle === 'Gallery';
+  
+  // If it's Gallery, open to the left. Otherwise, open to the right.
+  const positionClass = isGallery ? 'right-full mr-1' : 'left-full ml-1';
+  // Adjust the slide animation direction based on which side it opens
+  const animX = isGallery ? -5 : 5;
+
   return (
     <div
       className="relative"
@@ -16,15 +25,16 @@ const NestedMenuItem = ({ item }) => {
     >
       <div className="flex items-center justify-between px-4 py-1.5 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition-colors cursor-pointer border-b border-gray-50">
         {item.label}
-        <ChevronRight size={14} className="text-orange-400" />
+        {/* If it opens left, we can optionally flip the arrow, but let's keep it standard or point it left */}
+        <ChevronRight size={14} className={`text-orange-400 ${isGallery ? 'rotate-180' : ''}`} />
       </div>
       <AnimatePresence>
         {isSubOpen && (
           <motion.div
-            initial={{ opacity: 0, x: 5 }}
+            initial={{ opacity: 0, x: animX }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 5 }}
-            className="absolute left-full top-0 ml-1 w-64 bg-white border border-orange-200 shadow-xl rounded-md z-50 py-1"
+            exit={{ opacity: 0, x: animX }}
+            className={`absolute ${positionClass} top-0 w-64 bg-white border border-orange-200 shadow-xl rounded-md z-50 py-1`}
           >
             {item.subOptions.map((sub, idx) => (
               <Link 
@@ -70,7 +80,7 @@ const NavItem = ({ title, options = [], isGrid = false, headerText }) => {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
-            className="absolute left-0 mt-0 bg-white border-t-2 border-orange-600 shadow-2xl rounded-b-md z-50 w-64"
+            className={`absolute ${title === 'Gallery' ? 'right-0' : 'left-0'} mt-0 bg-white border-t-2 border-orange-600 shadow-2xl rounded-b-md z-50 w-64`}
           >
             {headerText && (
               <div className="bg-gradient-to-r from-orange-50 to-orange-100 px-4 py-3 border-b border-orange-200 text-xs text-orange-900 text-center italic leading-relaxed">
@@ -90,7 +100,8 @@ const NavItem = ({ title, options = [], isGrid = false, headerText }) => {
                     </Link>
                   );
                 } else {
-                  return <NestedMenuItem key={idx} item={opt} />;
+                  // We pass the parentTitle down so the child knows which way to open!
+                  return <NestedMenuItem key={idx} item={opt} parentTitle={title} />;
                 }
               })}
             </div>
@@ -215,13 +226,14 @@ export default function Navbar() {
   const menuData = [
     { title: "Home", options: [] },
     { title: "Asramam", options: ["Asramam History", "Founder Profile", "Lineage (Peethadhipatulu)", "Daily Schedule"] },
-    { title: "Amenities", options: ["Devotee Accommodation", "Dining", "Goshala (Cow Shelter)"] },
+    { title: "Amenities", options: ["Devotee Accommodation", "Maharshi Annaprasadam", "Goshala (Cow Shelter)"] },
     { 
       title: "Sannidhis", 
       options: [
         {
           label: "Sri Tarakeswara Mandir",
           subOptions: [
+            "Sri Tarakeswara Swami",
             "Jagadamba Mahadevi",
             "Bhagavan Murali Krishna",
             "Bhagavan Dattatreya",
@@ -237,12 +249,9 @@ export default function Navbar() {
     },
     { title: "Adhistana Mandiram", options: ["About the Mandiram", "Darshan Timings", "Special Rituals"] },
     { title: "Library", options: ["Spiritual Books", "Audio Archives", "Video Discourses"] },
-    
-    // UPDATED MAGAZINE ITEM - No options array, making it a direct clean link!
     { title: "Sri Viswa Mimamsa Monthly (Magazine)", options: [] },
-    
-    { title: "Events", options: ["Upcoming Festivals", "Mahasudarshana Homam", "Monthly Calendar"] },
-    { title: "Donations", options: ["E-Hundi", "Annadanam Trust", "Gosala Trust", "Vidyadana Trust"] },
+    { title: "Events", options: ["Upcoming Festivals", "Monthly Calendar"] },
+    { title: "Donations", options: ["E-Hundi", "Maharshi Annaprasadam Trust", "Gosala Trust", "Vidyadana Trust"] },
     { title: "About", options: ["Contact Us", "Committees", "Route Map"] },
     { 
       title: "Gallery", 

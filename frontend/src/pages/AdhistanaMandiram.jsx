@@ -79,7 +79,7 @@ export default function AdhistanaMandiram() {
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/2 h-80 lg:h-[450px]">
             <img 
-              src="/dhyana-mandir-ext.jpg" 
+              src="/adhisthana-ext.jpg" 
               alt="Adhistana Mandiram Exterior" 
               className="w-full h-full object-cover"
               onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
@@ -122,7 +122,7 @@ export default function AdhistanaMandiram() {
           className="rounded-3xl overflow-hidden shadow-2xl border-4 border-orange-100 mb-10 h-64 md:h-[500px] relative"
         >
           <img 
-            src="/tarakeswaramandiram.jpg" 
+            src="/mahasamadhi.jpeg" 
             alt="Maha Samadhi Hall" 
             className="w-full h-full object-cover"
             onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}

@@ -25,7 +25,6 @@ const NestedMenuItem = ({ item, parentTitle }) => {
     >
       <div className="flex items-center justify-between px-4 py-1.5 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition-colors cursor-pointer border-b border-gray-50">
         {item.label}
-        {/* If it opens left, we can optionally flip the arrow, but let's keep it standard or point it left */}
         <ChevronRight size={14} className={`text-orange-400 ${isGallery ? 'rotate-180' : ''}`} />
       </div>
       <AnimatePresence>
@@ -40,6 +39,7 @@ const NestedMenuItem = ({ item, parentTitle }) => {
               <Link 
                 key={idx} 
                 to={`/${sub.toLowerCase().replace(/\s+/g, '-')}`} 
+                onClick={() => window.scrollTo(0, 0)}
                 className="block px-4 py-1.5 text-xs text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition-colors"
               >
                 {sub}
@@ -63,6 +63,7 @@ const NavItem = ({ title, options = [], isGrid = false, headerText }) => {
       {options.length === 0 ? (
          <Link 
             to={title.toLowerCase() === 'home' ? '/' : `/${title.toLowerCase().replace(/\s+/g, '-')}`}
+            onClick={() => window.scrollTo(0, 0)}
             className="flex items-center gap-1 px-2 py-2 text-orange-950 font-bold hover:text-orange-600 transition-colors text-xs lg:text-sm whitespace-nowrap"
          >
            {title}
@@ -94,13 +95,13 @@ const NavItem = ({ title, options = [], isGrid = false, headerText }) => {
                     <Link 
                       key={idx} 
                       to={`/${opt.toLowerCase().replace(/\s+/g, '-')}`} 
+                      onClick={() => window.scrollTo(0, 0)}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition-colors border-b border-gray-50 last:border-0"
                     >
                       {opt}
                     </Link>
                   );
                 } else {
-                  // We pass the parentTitle down so the child knows which way to open!
                   return <NestedMenuItem key={idx} item={opt} parentTitle={title} />;
                 }
               })}
@@ -113,7 +114,7 @@ const NavItem = ({ title, options = [], isGrid = false, headerText }) => {
 };
 
 /* =========================================
-   MOBILE COMPONENTS (New Accordion Menus)
+   MOBILE COMPONENTS
    ========================================= */
 const MobileNestedItem = ({ item, setIsMainOpen }) => {
   const [isSubOpen, setIsSubOpen] = useState(false);
@@ -139,7 +140,7 @@ const MobileNestedItem = ({ item, setIsMainOpen }) => {
                 <Link 
                   key={idx}
                   to={`/${sub.toLowerCase().replace(/\s+/g, '-')}`}
-                  onClick={() => setIsMainOpen(false)}
+                  onClick={() => { setIsMainOpen(false); window.scrollTo(0, 0); }}
                   className="block px-6 py-2 text-xs text-gray-600 hover:text-orange-700 hover:bg-orange-50"
                 >
                   • {sub}
@@ -160,7 +161,7 @@ const MobileNavItem = ({ title, options = [], headerText, setIsOpen }) => {
     return (
       <Link 
         to={title.toLowerCase() === 'home' ? '/' : `/${title.toLowerCase().replace(/\s+/g, '-')}`} 
-        onClick={() => setIsOpen(false)}
+        onClick={() => { setIsOpen(false); window.scrollTo(0, 0); }}
         className="block px-4 py-4 text-orange-950 font-bold border-b border-orange-100 hover:bg-orange-50 transition-colors"
       >
         {title}
@@ -199,7 +200,7 @@ const MobileNavItem = ({ title, options = [], headerText, setIsOpen }) => {
                     <Link 
                       key={idx}
                       to={`/${opt.toLowerCase().replace(/\s+/g, '-')}`}
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => { setIsOpen(false); window.scrollTo(0, 0); }}
                       className="block px-8 py-3 text-sm text-gray-700 hover:text-orange-700 hover:bg-orange-100/50 transition-colors"
                     >
                       {opt}
@@ -251,7 +252,7 @@ export default function Navbar() {
     { title: "Library", options: ["Spiritual Books", "Audio Archives", "Video Discourses"] },
     { title: "Sri Viswa Mimamsa Monthly (Magazine)", options: [] },
     { title: "Events", options: ["Upcoming Festivals", "Monthly Calendar"] },
-    { title: "Donations", options: ["E-Hundi", "Maharshi Annaprasadam Trust", "Gosala Trust", "Vidyadana Trust"] },
+    { title: "Donations", options: ["E-Hundi", "Gosala Trust", "Asramam Development","Maharshi Annaprasadam"] },
     { title: "About", options: ["Contact Us", "Committees", "Route Map"] },
     { 
       title: "Gallery", 
@@ -276,7 +277,7 @@ export default function Navbar() {
           MOBILE TOP BAR
           ========================================= */}
       <div className="lg:hidden flex items-center justify-between px-4 py-2 border-b-4 border-orange-600 bg-white">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-2">
           <div className="h-10 w-10 rounded-full border border-orange-300 p-0.5 bg-white flex-shrink-0">
             <img src="/logo.png" alt="Asramam Emblem" className="w-full h-full object-contain" />
           </div>
@@ -307,7 +308,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link to="/" className="text-center flex-shrink-0 block hover:opacity-90 transition-opacity">
+            <Link to="/" onClick={() => window.scrollTo(0, 0)} className="text-center flex-shrink-0 block hover:opacity-90 transition-opacity">
               <h1 className="text-3xl font-extrabold text-orange-950 flex items-center justify-center gap-3 glow-text">
                 <span className="text-orange-600 text-4xl">ॐ</span>
                 Sri Satyanandasramam
@@ -383,7 +384,7 @@ export default function Navbar() {
                     <img src="/brahmananda.jpg" alt="Brahmanandha Swamy" className="w-full h-full object-cover object-center" />
                   </div>
                 </div>
-                <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                <Link to="/" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }}>
                   <h2 className="text-[1.35rem] font-extrabold text-orange-950 flex items-center gap-2 glow-text text-center">
                     <span className="text-orange-600">ॐ</span>
                     Sri Satyanandasramam

@@ -39,7 +39,9 @@ import EHundi from './pages/EHundi';
 import AnnadanamTrust from './pages/AnnadanamTrust';
 import GosalaTrust from './pages/GosalaTrust';
 import ContactUs from './pages/ContactUs';
-
+import Lineage from './pages/Lineage';
+import Philosophy from './pages/Philosophy';
+import VideoDiscourses from './pages/VideoDiscourses';
 
 function App() {
   return (
@@ -77,16 +79,18 @@ function App() {
             <Route path="/route-map" element={<RouteMap />} />
             <Route path="/all-asramam-images" element={<AllAsramamImages />} />
             <Route path="/:pageName" element={<GenericPage />} />
-            <Route path="/dining" element={<MaharshiAnnaprasadam />} />
+            <Route path="/maharshi-annaprasadam" element={<MaharshiAnnaprasadam />} />
             <Route path="/sri-tarakeswara-swami" element={<SriTarakeswara />} />
             <Route path="/upcoming-festivals" element={<UpcomingFestivals />} />
             <Route path="/e-hundi" element={<EHundi />} />
             <Route path="/annadanam-trust" element={<AnnadanamTrust />} />
             <Route path="/gosala-trust" element={<GosalaTrust />} />
             <Route path="/contact-us" element={<ContactUs />} />
-
-
+            <Route path="/lineage-(peethadhipatulu)" element={<Lineage />} />
+            <Route path="/philosophy" element={<Philosophy />} />
+            <Route path="/video-discourses" element={<VideoDiscourses />} />
           </Routes>
+
         </div>
 
         {/* Global Footer Components */}

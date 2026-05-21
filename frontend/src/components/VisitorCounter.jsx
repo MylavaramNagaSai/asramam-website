@@ -1,35 +1,66 @@
 import React, { useState, useEffect } from 'react';
+import { db } from './firebase'; // Check path if needed
+import { ref, onValue, increment, update, onDisconnect, push, set } from "firebase/database";
 import { Users, Activity, Eye } from 'lucide-react';
 
 export default function VisitorCounter() {
-  // Simulated initial values
-  const [liveViewers, setLiveViewers] = useState(12);
-  const [todayVisitors, setTodayVisitors] = useState(147);
-  const [totalVisitors, setTotalVisitors] = useState(108437);
+  const [stats, setStats] = useState({ live: 0, today: 0, total: 0 });
 
-  // Highly realistic "Live Activity" Simulation Algorithm
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveViewers(prev => {
-        // Randomly fluctuate live viewers by -2 to +2
-        const change = Math.floor(Math.random() * 5) - 2; 
-        let next = prev + change;
-        
-        // Keep the live count realistic (between 5 and 28 for now)
-        if (next < 5) next = 5 + Math.floor(Math.random() * 3);
-        if (next > 28) next = 28 - Math.floor(Math.random() * 3);
-        
-        // If the live viewer count goes UP, there is a chance a *new* person arrived
-        if (next > prev && Math.random() > 0.4) {
-          setTodayVisitors(t => t + 1);
-          setTotalVisitors(t => t + 1);
-        }
-        
-        return next;
+    // --- 1. TODAY & TOTAL VISITORS (Session Based) ---
+    const hasVisited = sessionStorage.getItem('hasVisitedAsramam');
+    if (!hasVisited) {
+      update(ref(db, 'stats'), { 
+        today: increment(1),
+        total: increment(1)
       });
-    }, 3500); // Updates every 3.5 seconds for a dynamic feel
+      sessionStorage.setItem('hasVisitedAsramam', 'true');
+    }
 
-    return () => clearInterval(interval);
+    // Listen for updates to Today & Total
+    const statsRef = ref(db, 'stats');
+    const unsubscribeStats = onValue(statsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setStats(prev => ({
+          ...prev,
+          today: data.today || 0,
+          total: data.total || 0
+        }));
+      }
+    });
+
+    // --- 2. LIVE VIEWERS (Firebase Presence System) ---
+    // This tracks actual socket connections instead of doing +1 / -1 math
+    const connectedRef = ref(db, '.info/connected');
+    const liveUsersRef = ref(db, 'live_users');
+    const myConnectionRef = push(liveUsersRef); // Creates a unique temporary ID for this browser tab
+
+    const unsubscribeConnected = onValue(connectedRef, (snap) => {
+      if (snap.val() === true) {
+        // When connected, tell Firebase to delete our unique ID if the connection drops or tab closes
+        onDisconnect(myConnectionRef).remove().then(() => {
+          // Then actually write the ID to the database to say "I'm online"
+          set(myConnectionRef, true);
+        });
+      }
+    });
+
+    // Count how many unique IDs are currently active
+    const unsubscribeLive = onValue(liveUsersRef, (snap) => {
+      setStats(prev => ({
+        ...prev,
+        live: snap.exists() ? snap.size : 0 // Impossible to be negative!
+      }));
+    });
+
+    // --- 3. CLEANUP ---
+    return () => {
+      unsubscribeStats();
+      unsubscribeConnected();
+      unsubscribeLive();
+      set(myConnectionRef, null); // Remove our ID immediately if navigating away
+    };
   }, []);
 
   return (
@@ -49,13 +80,13 @@ export default function VisitorCounter() {
             </div>
             <div>
               <div className="text-3xl font-black text-green-600 font-mono transition-all duration-300">
-                {liveViewers}
+                {stats.live}
               </div>
               <div className="text-xs font-bold text-green-800 uppercase tracking-wider">Live Viewers</div>
             </div>
           </div>
 
-          {/* Vertical Divider (Hidden on Mobile) */}
+          {/* Vertical Divider */}
           <div className="hidden md:block w-px h-16 bg-orange-200"></div>
 
           {/* 2. Today's Viewers */}
@@ -65,13 +96,13 @@ export default function VisitorCounter() {
             </div>
             <div>
               <div className="text-3xl font-black text-orange-600 font-mono transition-all duration-300">
-                {todayVisitors.toLocaleString()}
+                {stats.today.toLocaleString()}
               </div>
               <div className="text-xs font-bold text-orange-900 uppercase tracking-wider">Today's Visitors</div>
             </div>
           </div>
 
-          {/* Vertical Divider (Hidden on Mobile) */}
+          {/* Vertical Divider */}
           <div className="hidden md:block w-px h-16 bg-orange-200"></div>
 
           {/* 3. Total Viewers */}
@@ -81,14 +112,13 @@ export default function VisitorCounter() {
             </div>
             <div>
               <div className="text-3xl font-black text-orange-950 font-mono">
-                {totalVisitors.toLocaleString()}
+                {stats.total.toLocaleString()}
               </div>
               <div className="text-xs font-bold text-orange-900/70 uppercase tracking-wider">Total Visitors</div>
             </div>
           </div>
 
         </div>
-
       </div>
     </div>
   );

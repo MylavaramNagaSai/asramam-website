@@ -31,7 +31,7 @@ export default function LatestUpdates() {
     },
     {
       id: 3,
-      image: "https://images.unsplash.com/photo-1519818314112-9c4c7b8d4c94?q=80&w=400&auto=format&fit=crop",
+      image: "/portal.png",
       date: "April 28, 2026",
       title: "New Digital Platform Launched",
       excerpt: "Sri Sathyanandha Asramam proudly launches its new digital portal, allowing devotees worldwide to book sevas, donate, and access spiritual literature online.",

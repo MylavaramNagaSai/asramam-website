@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function TeachingsSection() {
   // Updated to show the exact lineage in chronological order
@@ -31,9 +32,14 @@ export default function TeachingsSection() {
               True devotion is not found merely in the chanting of mantras, but in the silent, selfless service to humanity. When you see the Divine in the hungry, the poor, and the voiceless, your life itself becomes a continuous prayer.
             </p>
             <div className="text-right">
-              <button className="text-orange-600 font-bold hover:text-orange-800 transition-colors">
+              {/* UPDATED: Converted button to Link to point to the new Philosophy page */}
+              <Link 
+                to="/philosophy" 
+                onClick={() => window.scrollTo(0, 0)}
+                className="text-orange-600 font-bold hover:text-orange-800 transition-colors inline-block"
+              >
                 Read Complete Philosophy &rarr;
-              </button>
+              </Link>
             </div>
           </div>
         </div>

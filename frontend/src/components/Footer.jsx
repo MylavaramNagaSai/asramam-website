@@ -12,10 +12,10 @@ export default function Footer() {
           {/* Column 1: About Asramam */}
           <div>
             <h2 className="text-2xl font-bold text-white flex items-center gap-2 mb-6">
-              <span className="text-orange-500">ॐ</span> Sri Sathyanandha Asramam
+              <span className="text-orange-500">ॐ</span> Sri Satyanandasramam
             </h2>
             <p className="text-sm leading-relaxed mb-6">
-              Established in 1935, our Asramam is dedicated to the divine teachings of Sri Sathyanandha Maharshi. We serve as a spiritual haven for devotees seeking peace, inner knowledge, and the path of selfless service through Nithya Annadanam and Gosamrakshana.
+              Established in 1935, our Asramam is dedicated to the divine teachings of Sri Satyananda Maharshi. We serve as a spiritual haven for devotees seeking peace, inner knowledge, and the path of selfless service through Maharshi Annaprasadam and Gosamrakshana.
             </p>
             <a href="/about" className="text-orange-500 font-bold hover:text-orange-400 flex items-center gap-1 transition-colors text-sm">
               Read Full History <ArrowRight size={16} />
@@ -29,18 +29,18 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="text-orange-500 flex-shrink-0 mt-1" size={18} />
                 <p>
-                  Sri Sathyanandha Asramam,<br />
+                  Sri Satyanandasramam,<br />
                   Inamadugu Village, Kovur Mandal,<br />
                   Nellore District, Andhra Pradesh - 524137
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="text-orange-500 flex-shrink-0" size={18} />
-                <p>+91 98765 43210</p>
+                <p>+91 94402 79712</p>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="text-orange-500 flex-shrink-0" size={18} />
-                <p>info@srisathyanandhaasramam.org</p>
+                <p>contact@srisatyanandasramam.org.in</p>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function Footer() {
           </div>
 
           <div className="text-orange-600 flex-1 text-right">
-            &copy; 2026 Sri Sathyanandha Asramam. All Rights Reserved.
+            &copy; 2026 Sri Satyanandasramam. All Rights Reserved.
           </div>
           
         </div>

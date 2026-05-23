@@ -16,17 +16,17 @@ export default function Committees() {
   const coreCommittee = [
     {
       id: 1,
-      name: "Ch. Venkateswara Rao",
+      name: "Cheemakurthi Venkateswara Rao",
       role: "Vice President",
       phone: "+91 98765 00002",
-      image: "" 
+      image: "/chvr.jpg" 
     },
     {
       id: 2,
       name: "P. Nageswara Rao",
       role: "Secretary",
       phone: "+91 98765 00003",
-      image: ""
+      image: "/pnr.jpg"
     },
     {
       id: 3,
@@ -39,7 +39,7 @@ export default function Committees() {
 
   // 3. Executive Members
   const executiveMembers = [
-    { id: 4, name: "Purushottama Teertha Swamy", role: "Executive Member", phone: "+91 98765 00005", image: "" },
+    { id: 4, name: "Purushottama Teertha Swamy", role: "Executive Member", phone: "+91 98765 00005", image: "/purushottam.jpg" },
     { id: 5, name: "Rama Teertha Swamy", role: "Executive Member", phone: "+91 98765 00006", image: "" },
     { id: 6, name: "Kota Rajashekar", role: "Executive Member", phone: "+91 98765 00007", image: "" },
     { id: 7, name: "Ch. Chalapati Rao", role: "Executive Member", phone: "+91 98765 00008", image: "" },

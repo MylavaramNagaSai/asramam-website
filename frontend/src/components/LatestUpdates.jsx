@@ -5,22 +5,22 @@ import { Bell } from 'lucide-react';
 export default function LatestUpdates() {
   // Urgent scrolling announcements
   const flashNews = [
-    "Registration for Nithya Annadanam Trust is now open online.",
-    "Special Homam scheduled for next Pournami. Devotees can book virtual sevas.",
-    "Ashram library timings extended by 2 hours during the summer schedule."
+    " భగవాన్ శ్రీశ్రీశ్రీ సత్యానంద మహర్షి వారి 500వ సంచార సత్సంగ మహోత్సవం (జూన్ 5, 6, 7 - 2026) కావేరీ గార్డెన్స్, కోరుట్ల యందు జరుగనుండగా భక్తులందరూ సకుటుంబ సపరివార సమేతంగా ఆహ్వానితులే!",
+    " You are cordially invited to the historic 500th Sanchara Satsang Mahotsavam on June 5, 6 & 7, 2026, at Kaveri Gardens, Korutla!.",
+    " సంస్కృత భాషా శిక్షణ కోసం శ్రీ సత్యానంద మహర్షి వారి ఆన్‌లైన్ వర్చువల్ క్లాసులు ప్రారంభమయ్యాయి. ఇప్పుడే నమోదు చేసుకోండి మరియు ఆధ్యాత్మిక జ్ఞానాన్ని మీ ఇంటి సౌకర్యంలో పొందండి!",
   ];
 
   // We duplicate the array to create a seamless infinite scrolling ticker
-  const tickerText = [...flashNews, ...flashNews].join(" ✦ ");
+  const tickerText = [...flashNews].join(" ❖ ");
 
   // The 3 main news cards
   const updates = [
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1593693397690-362bb9ae26a2?q=80&w=400&auto=format&fit=crop",
-      date: "May 10, 2026",
-      title: "Foundation Stone Laid for New Gosala",
-      excerpt: "With the blessings of the Swamys, the foundation stone for the new extended Gosala was laid today. This expansion will allow the ashram to care for an additional 50 cows.",
+      image: "/satsang-500.jpg",
+      date: "May 25, 2026",
+      title: "500th Sanchara Satsang Mahotsavam",
+      excerpt: "Join us for the historic 500th Sanchara Satsang Mahotsavam on June 5, 6 & 7, 2026, at Kaveri Gardens, Korutla. All devotees are cordially invited to participate in this divine milestone.",
     },
     {
       id: 2,
@@ -53,7 +53,7 @@ export default function LatestUpdates() {
             animate={{ x: ["0%", "-50%"] }}
             transition={{
               ease: "linear",
-              duration: 80, // CHANGED TO 350: Ultra-slow creeping speed for perfect readability
+              duration: 80, 
               repeat: Infinity,
             }}
           >

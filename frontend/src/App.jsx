@@ -42,6 +42,7 @@ import ContactUs from './pages/ContactUs';
 import Lineage from './pages/Lineage';
 import Philosophy from './pages/Philosophy';
 import VideoDiscourses from './pages/VideoDiscourses';
+import SatsangPopup from './components/SatsangPopup'; // Adjust path if necessary
 
 function App() {
   return (
@@ -89,6 +90,8 @@ function App() {
             <Route path="/lineage-(peethadhipatulu)" element={<Lineage />} />
             <Route path="/philosophy" element={<Philosophy />} />
             <Route path="/video-discourses" element={<VideoDiscourses />} />
+            <Route path="/satsang-popup" element={<SatsangPopup />} />
+            
           </Routes>
 
         </div>

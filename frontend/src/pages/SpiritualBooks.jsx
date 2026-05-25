@@ -100,7 +100,7 @@ export default function SpiritualBooks() {
       </h1>
       
       <p className="text-center text-orange-800/80 italic font-medium mb-10 border-b-2 border-orange-200 pb-6 max-w-2xl mx-auto text-base md:text-lg">
-        Welcome to the digital divine library. Browse, read online, or download authentic ashram literature and classic scriptures directly onto your device.
+        Welcome to the digital divine library. Browse, read online, or download authentic asramam literature and classic scriptures directly onto your device.
       </p>
 
       {/* Premium Search & Control Bar Container */}

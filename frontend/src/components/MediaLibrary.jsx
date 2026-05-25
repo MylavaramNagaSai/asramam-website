@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PlayCircle, Headphones, Image as ImageIcon, Folder, FolderOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 // --- THE AUDIO DATA STRUCTURE ---
 // Transcribed exactly from your directory tree
@@ -167,17 +168,17 @@ export default function MediaLibrary() {
 
   // Placeholder data for Videos and Images tabs
   const videoFiles = [
-    { title: "Maha Kumbhabhishekam 2022", img: "https://images.unsplash.com/photo-1545620986-7a7019253c0d?q=80&w=300&auto=format&fit=crop" },
-    { title: "Ashram Daily Drone View", img: "https://images.unsplash.com/photo-1590050859556-91361c4dfcc9?q=80&w=300&auto=format&fit=crop" },
+    { title: "Maha Kumbhabhishekam 2022", img: "https://youtu.be/0rL_-evK2gM?si=jCn52mcuFeFpkAmM" },
+    { title: "Asramam Daily Drone View", img: "https://images.unsplash.com/photo-1590050859556-91361c4dfcc9?q=80&w=300&auto=format&fit=crop" },
     { title: "Gosala Expansion Ceremony", img: "https://images.unsplash.com/photo-1582500054796-08191244e8bc?q=80&w=300&auto=format&fit=crop" },
   ];
 
-  const imageFiles = [
-    "https://images.unsplash.com/photo-1514222288957-49f2b33f3824?q=80&w=300&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1600100397608-f010f4ea5c4e?q=80&w=300&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1593113580556-9d33b49abeb5?q=80&w=300&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1604882747372-7634f19b88c3?q=80&w=300&auto=format&fit=crop",
-  ];
+ const imageFiles = [
+  "/gallery/image1.jpg",
+  "/gallery/image2.jpg",
+  "/gallery/image3.jpg",
+  "/gallery/image4.jpg",
+];
 
   const tabStyle = (tabName) => 
     `flex items-center gap-2 px-6 py-3 font-bold text-sm lg:text-base rounded-t-lg transition-colors cursor-pointer border-b-4 ${
@@ -191,7 +192,7 @@ export default function MediaLibrary() {
       
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-orange-950 flex items-center justify-center gap-3">
-          <span className="text-orange-400">❖</span> Ashram Digital Archives <span className="text-orange-400">❖</span>
+          <span className="text-orange-400">❖</span> Asramam Digital Archives <span className="text-orange-400">❖</span>
         </h2>
         <p className="text-gray-600 mt-2">Explore the divine teachings through audio, video, and imagery.</p>
       </div>
@@ -249,18 +250,38 @@ export default function MediaLibrary() {
           )}
 
           {/* IMAGE TAB CONTENT */}
-          {activeTab === 'image' && (
-            <motion.div key="image" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {imageFiles.map((img, idx) => (
-                <div key={idx} className="h-40 rounded-lg overflow-hidden shadow-sm border border-gray-200 cursor-pointer">
-                  <img src={img} alt="Gallery" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-                </div>
-              ))}
-              <div className="col-span-2 md:col-span-4 text-center mt-4">
-                 <button className="text-orange-600 font-bold hover:underline">View Full Gallery &rarr;</button>
-              </div>
-            </motion.div>
-          )}
+          {/* IMAGE TAB CONTENT */}
+{/* IMAGE TAB CONTENT - UPDATED FOR FULL IMAGES */}
+{activeTab === 'image' && (
+  <motion.div 
+    key="image" 
+    initial={{ opacity: 0, y: 10 }} 
+    animate={{ opacity: 1, y: 0 }} 
+    exit={{ opacity: 0, y: -10 }} 
+    className="grid grid-cols-1 md:grid-cols-2 gap-6" // Using 2 columns makes the images bigger and clearer
+  >
+    {imageFiles.map((img, idx) => (
+      <div key={idx} className="h-80 bg-gray-50 rounded-xl overflow-hidden shadow-sm border border-orange-100 cursor-pointer flex items-center justify-center p-2">
+        <img 
+          src={img} 
+          alt={`Gallery Item ${idx + 1}`} 
+          // object-contain ensures the WHOLE image is visible without cropping
+          className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+    ))}
+    
+    <div className="col-span-1 md:col-span-2 text-center mt-4">
+      <Link 
+        to="/all-asramam-images" 
+        onClick={() => window.scrollTo(0, 0)}
+        className="text-orange-600 font-bold hover:underline transition-all flex items-center justify-center gap-2"
+      >
+        View Full Gallery <span>&rarr;</span>
+      </Link>
+    </div>
+  </motion.div>
+)}
 
         </AnimatePresence>
       </div>

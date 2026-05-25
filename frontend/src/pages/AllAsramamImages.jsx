@@ -23,12 +23,12 @@ export default function AllAsramamImages() {
     { id: 10, src: '/adhisthana-ext.jpg', title: 'Adhistana Mandiram', category: 'Mandirams' },
     { id: 11, src: '/venka-mamba-ext.jpg', title: 'Venka Mamba Samadhi', category: 'Mandirams' },
     { id: 12, src: '/gowri-shankar-gopuram.jpg', title: 'Gowri Shankar Gopuram', category: 'Mandirams' },
-    { id: 13, src: '/goshala.png', title: 'Asramam Goshala', category: 'Ashram Views' }
+    { id: 13, src: '/goshala.png', title: 'Asramam Goshala', category: 'Asramam Views' }
   ];
 
   // Merge datasets natively
   const allImages = [...curatedImages, ...massiveImageArchive];
-  const categories = ['All', 'Mandirams', 'Gurus & Deities', 'Ashram Views', 'Archive'];
+  const categories = ['All', 'Mandirams', 'Gurus & Deities', 'Asramam Views', 'Archive'];
 
   const filteredImages = activeFilter === 'All' 
     ? allImages 

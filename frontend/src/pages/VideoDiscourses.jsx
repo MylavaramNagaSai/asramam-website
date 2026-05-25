@@ -23,10 +23,10 @@ export default function VideoDiscourses() {
       category: "Srimad Bhagavatam"
     },
     {
-      id: "x-QKQrg0lSw", 
-      title: "SHIVOHAM: Shri Paramahamsa Swami Satyananda Saraswati",
-      date: "December 14, 2009",
-      category: "Divine Chants"
+      id: "nuf4Pi5tkxw", 
+      title: "Bhagavatam Part1(3/3)-PujyaSri Brahmananda Teertha Swamiji",
+      date: "September 1, 2023",
+      category: "Srimad Bhagavatam"
     },
     // You can add more featured videos here by just pasting the video ID!
     // Example: For youtube.com/watch?v=ABCDEFG, the id is "ABCDEFG"

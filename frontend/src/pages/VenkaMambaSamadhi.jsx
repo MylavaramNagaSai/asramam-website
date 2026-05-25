@@ -100,7 +100,7 @@ export default function VenkaMambaSamadhi() {
         </p>
         <div className="w-24 h-1 bg-orange-400 mx-auto rounded-full mb-4"></div>
         <p className="font-bold text-orange-900 tracking-widest uppercase text-sm">
-          Sree Satyananda Ashramam
+          Sree Satyanandasramam
         </p>
       </motion.div>
 

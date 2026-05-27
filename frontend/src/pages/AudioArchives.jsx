@@ -6,10 +6,10 @@ export default function AudioArchives() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('All');
 
-  // Vite base URL path resolver sathi variable
+  // Safely handles the root path whether on localhost or Vercel
   const baseUrl = import.meta.env.BASE_URL;
 
-  // Mapped directly from your terminal tree structures with production path fixes
+  // Paths are explicitly matched to your Linux tree output
   const audioData = [
     // BHAJANS (Satyananda Pahimam)
     { title: "SSP02 - Sri Gurudeva", file: `${baseUrl}AUDIO/SATYANANDA PAHIMAM/SSP02-Sri gurudeva.mp3`, cat: "Bhajans" },

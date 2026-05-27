@@ -1,56 +1,78 @@
 import React, { useState, useEffect } from 'react';
-import { db } from './firebase'; // Check path if needed
-import { ref, onValue, increment, update, onDisconnect, push, set } from "firebase/database";
+import { db } from './firebase'; // Ensure this path points to your initialized firebase file
+import { ref, onValue, runTransaction, onDisconnect, push, set } from "firebase/database";
 import { Users, Activity, Eye } from 'lucide-react';
 
 export default function VisitorCounter() {
   const [stats, setStats] = useState({ live: 0, today: 0, total: 0 });
 
   useEffect(() => {
-    // --- 1. TODAY & TOTAL VISITORS (Session Based) ---
+    // --- 1. TODAY & TOTAL VISITORS (Midnight Reset Logic using Transaction) ---
     const hasVisited = sessionStorage.getItem('hasVisitedAsramam');
+    const statsRef = ref(db, 'stats');
+    
+    // Get the current date in YYYY-MM-DD format based on Indian Standard Time
+    const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+
     if (!hasVisited) {
-      update(ref(db, 'stats'), { 
-        today: increment(1),
-        total: increment(1)
+      runTransaction(statsRef, (currentData) => {
+        if (currentData === null) {
+          // Initialize if the database is completely empty
+          return { total: 1, daily: { date: todayStr, count: 1 } };
+        }
+
+        let newTotal = (currentData.total || 0) + 1;
+        let newDaily = { ...currentData.daily };
+
+        // The Midnight Reset Logic
+        if (newDaily.date === todayStr) {
+          // Same day: increment the count
+          newDaily.count = (newDaily.count || 0) + 1;
+        } else {
+          // New day: Reset count to 1 and update the date string
+          newDaily = { date: todayStr, count: 1 };
+        }
+
+        return {
+          total: newTotal,
+          daily: newDaily
+        };
+      }).then(() => {
+        sessionStorage.setItem('hasVisitedAsramam', 'true');
+      }).catch((error) => {
+        console.error("Transaction failed: ", error);
       });
-      sessionStorage.setItem('hasVisitedAsramam', 'true');
     }
 
-    // Listen for updates to Today & Total
-    const statsRef = ref(db, 'stats');
+    // Listen for live updates to the Total and Today numbers
     const unsubscribeStats = onValue(statsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         setStats(prev => ({
           ...prev,
-          today: data.today || 0,
-          total: data.total || 0
+          total: data.total || 0,
+          today: data.daily?.count || 0 // Read from the new nested daily object
         }));
       }
     });
 
     // --- 2. LIVE VIEWERS (Firebase Presence System) ---
-    // This tracks actual socket connections instead of doing +1 / -1 math
     const connectedRef = ref(db, '.info/connected');
     const liveUsersRef = ref(db, 'live_users');
-    const myConnectionRef = push(liveUsersRef); // Creates a unique temporary ID for this browser tab
+    const myConnectionRef = push(liveUsersRef);
 
     const unsubscribeConnected = onValue(connectedRef, (snap) => {
       if (snap.val() === true) {
-        // When connected, tell Firebase to delete our unique ID if the connection drops or tab closes
         onDisconnect(myConnectionRef).remove().then(() => {
-          // Then actually write the ID to the database to say "I'm online"
           set(myConnectionRef, true);
         });
       }
     });
 
-    // Count how many unique IDs are currently active
     const unsubscribeLive = onValue(liveUsersRef, (snap) => {
       setStats(prev => ({
         ...prev,
-        live: snap.exists() ? snap.size : 0 // Impossible to be negative!
+        live: snap.exists() ? snap.size : 0
       }));
     });
 
@@ -59,7 +81,7 @@ export default function VisitorCounter() {
       unsubscribeStats();
       unsubscribeConnected();
       unsubscribeLive();
-      set(myConnectionRef, null); // Remove our ID immediately if navigating away
+      set(myConnectionRef, null);
     };
   }, []);
 

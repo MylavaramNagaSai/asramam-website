@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 public/AUDIO/
+# Ignore large media files temporarily to prevent Git crashes
+public/AUDIO/
+public/asramamimages/*.wmv
+public/AUDIO/
+public/asramamimages/

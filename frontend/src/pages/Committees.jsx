@@ -8,7 +8,7 @@ export default function Committees() {
   const president = {
     name: "Srihari Teertha Swamy",
     role: "President (Adhyakshulu)",
-    phone: "+91 98765 00001",
+    phone: "+91 94402 79712",
     image: "/srihari.jpg" // Using the existing image from your public folder
   };
 
@@ -18,32 +18,31 @@ export default function Committees() {
       id: 1,
       name: "Cheemakurthi Venkateswara Rao",
       role: "Vice President",
-      phone: "+91 98765 00002",
+      phone: "+91 99088 55294",
       image: "/chvr.jpg" 
     },
     {
       id: 2,
       name: "P. Nageswara Rao",
       role: "Secretary",
-      phone: "+91 98765 00003",
+      phone: "+91 98669 05041",
       image: "/pnr.jpg"
     },
     {
       id: 3,
       name: "Rama Krishna Paramahamsa",
       role: "Joint Secretary",
-      phone: "+91 98765 00004",
+      phone: "+91 94414 00994",
       image: ""
     }
   ];
 
   // 3. Executive Members
   const executiveMembers = [
-    { id: 4, name: "Purushottama Teertha Swamy", role: "Executive Member", phone: "+91 98765 00005", image: "/purushottam.jpg" },
-    { id: 5, name: "Rama Teertha Swamy", role: "Executive Member", phone: "+91 98765 00006", image: "" },
-    { id: 6, name: "Kota Rajashekar", role: "Executive Member", phone: "+91 98765 00007", image: "" },
-    { id: 7, name: "Ch. Chalapati Rao", role: "Executive Member", phone: "+91 98765 00008", image: "" },
-    { id: 8, name: "Vishoka Teertha Swamy", role: "Executive Member", phone: "+91 98765 00009", image: "" }
+    { id: 4, name: "Purushottama Teertha Swamy", role: "Executive Member", phone: "+91 93813 18277", image: "/purushottam.jpg" },
+    { id: 5, name: "Rama Teertha Swamy", role: "Executive Member", phone: "To Be Announced", image: "" },
+    { id: 6, name: "Kota Rajashekar", role: "Executive Member", phone: "+91 99662 36604", image: "" },
+    { id: 7, name: "Ch. Chalapati Rao", role: "Executive Member", phone: "+91 99082 44713", image: "" }
   ];
 
   // Helper component for rendering individual member cards

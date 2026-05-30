@@ -24,10 +24,11 @@ export default function LatestUpdates() {
     },
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1604882747372-7634f19b88c3?q=80&w=400&auto=format&fit=crop",
-      date: "May 05, 2026",
-      title: "Summer Vidyadana Camp Concludes",
-      excerpt: "The 10-day summer spiritual camp for children concluded with a grand recitation of the Bhagavad Gita by over 200 young participants.",
+      // Using a nice Unsplash placeholder of classic books. You can change this to a local image later if you want!
+      image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=400&auto=format&fit=crop", 
+      date: "May 30, 2026",
+      title: "Historic Digitization of Asramam Books",
+      excerpt: "We are thrilled to announce the completion of a massive digitization project. Over 600 editions of the Sri Viswa Mimamsa Monthly magazine, dating back to 1947, are now beautifully archived and available online.",
     },
     {
       id: 3,
@@ -41,15 +42,15 @@ export default function LatestUpdates() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 mb-12">
       
-      {/* SECTION 1: The Scrolling Flash News Ticker */}
-      <div className="flex items-center bg-white border border-orange-200 rounded-lg shadow-sm overflow-hidden mb-10">
-        <div className="bg-orange-600 text-white px-4 py-3 flex items-center gap-2 font-bold z-10 shadow-md whitespace-nowrap relative">
-          <Bell size={18} className="animate-pulse" />
+      {/* SECTION 1: The Scrolling Flash News Ticker (FIXED FOR MOBILE) */}
+      <div className="flex items-center h-10 md:h-12 bg-white border border-orange-200 rounded-lg shadow-sm overflow-hidden mb-8 md:mb-10">
+        <div className="bg-orange-600 text-white px-3 md:px-4 h-full flex items-center justify-center gap-1.5 md:gap-2 font-bold z-10 shadow-md whitespace-nowrap relative text-xs md:text-base">
+          <Bell size={16} className="animate-pulse md:w-5 md:h-5" />
           <span>Flash News</span>
         </div>
-        <div className="flex-grow overflow-hidden relative flex items-center bg-orange-50 h-full py-3">
+        <div className="flex-grow overflow-hidden relative flex items-center bg-orange-50 h-full">
           <motion.div
-            className="whitespace-nowrap text-orange-900 font-medium px-4"
+            className="whitespace-nowrap text-orange-900 font-medium text-xs md:text-base px-4"
             animate={{ x: ["0%", "-50%"] }}
             transition={{
               ease: "linear",
@@ -95,11 +96,7 @@ export default function LatestUpdates() {
               <p className="text-gray-600 text-sm mb-4 leading-relaxed flex-grow">
                 {update.excerpt}
               </p>
-              <div className="mt-auto">
-                <span className="text-orange-600 text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
-                  Read More <span>&rarr;</span>
-                </span>
-              </div>
+              
             </div>
 
           </div>

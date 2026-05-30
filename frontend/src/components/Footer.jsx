@@ -15,11 +15,9 @@ export default function Footer() {
               <span className="text-orange-500">ॐ</span> Sri Satyanandasramam
             </h2>
             <p className="text-sm leading-relaxed mb-6">
-              Established in 1935, our Asramam is dedicated to the divine teachings of Sri Satyananda Maharshi. We serve as a spiritual haven for devotees seeking peace, inner knowledge, and the path of selfless service through Maharshi Annaprasadam and Gosamrakshana.
+              Established in 1934, our Asramam is dedicated to the divine teachings of Sri Satyananda Maharshi. We serve as a spiritual haven for devotees seeking peace, inner knowledge, and the path of selfless service through Maharshi Annaprasadam and Gosamrakshana.
             </p>
-            <a href="/about" className="text-orange-500 font-bold hover:text-orange-400 flex items-center gap-1 transition-colors text-sm">
-              Read Full History <ArrowRight size={16} />
-            </a>
+            
           </div>
 
           {/* Column 2: Contact Info */}
@@ -87,14 +85,14 @@ export default function Footer() {
                     <div className="bg-orange-100 text-orange-800 text-xs font-bold px-4 py-2 uppercase tracking-wider text-center">
                       Official Pages
                     </div>
+                    <a href="https://www.facebook.com/share/1Jo6tFpRyM/" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 hover:bg-orange-50 hover:text-orange-600 transition-colors">
+                      Sri Satyanandasramam
+                    </a>
                     <a href="https://www.facebook.com/share/1DaccfT4oN/" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 hover:bg-orange-50 hover:text-orange-600 border-b border-orange-50 transition-colors">
                       Sri Satyananda Maharshi
                     </a>
                     <a href="https://www.facebook.com/share/1CzHAhFvg6/" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 hover:bg-orange-50 hover:text-orange-600 border-b border-orange-50 transition-colors">
                       Sri Brahmananda Teertha
-                    </a>
-                    <a href="https://www.facebook.com/share/1DxD1tMm6J/" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 hover:bg-orange-50 hover:text-orange-600 transition-colors">
-                      Srihari Teertha
                     </a>
                   </div>
                   <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-white"></div>
@@ -128,11 +126,7 @@ export default function Footer() {
         {/* Bottom Section: Copyright & Credits */}
         <div className="border-t border-orange-900/50 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
           
-          <div className="flex gap-4 text-orange-600 flex-1">
-            <a href="#" className="hover:text-orange-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-orange-400 transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-orange-400 transition-colors">Refund Policy</a>
-          </div>
+          
           
           {/* UPDATED: Increased size and made your name a clickable link */}
           <div className="text-orange-500/80 text-sm md:text-base flex-1 text-center">

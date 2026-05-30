@@ -25,10 +25,9 @@ export default function HeroCarousel() {
     "/asramam13.png"
   ];
 
-  // Tripling the array gives us plenty of runway for continuous scrolling
   const scrollImages = [...images, ...images, ...images];
 
-  // Upgraded Auto-scroll logic (Super smooth, pauses on hover or drag)
+  // Auto-scroll logic
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
@@ -36,12 +35,12 @@ export default function HeroCarousel() {
     let animationFrameId;
 
     const autoScroll = () => {
+      // Only auto-scroll if NOT hovering with a mouse AND NOT touching/dragging
       if (!isHovered && !isDragging) {
-        scrollContainer.scrollLeft += 0.8; // Slower, smoother speed
+        scrollContainer.scrollLeft += 1; 
         
-        // Loop back to start smoothly when reaching the end
-        if (scrollContainer.scrollLeft >= (scrollContainer.scrollWidth - scrollContainer.clientWidth - 5)) {
-          scrollContainer.scrollLeft = 0;
+        if (scrollContainer.scrollLeft >= (scrollContainer.scrollWidth / 3) * 2) {
+          scrollContainer.scrollLeft -= (scrollContainer.scrollWidth / 3);
         }
       }
       animationFrameId = requestAnimationFrame(autoScroll);
@@ -56,21 +55,31 @@ export default function HeroCarousel() {
   const scroll = (direction) => {
     const scrollContainer = scrollRef.current;
     if (scrollContainer) {
-      const scrollAmount = direction === 'left' ? -400 : 400;
+      const scrollAmount = direction === 'left' ? -350 : 350;
       scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
-  // Mouse Drag-to-Scroll Logic
+  // --- SMART POINTER LOGIC (Fixes the mobile sticky-hover bug) ---
+  const handlePointerEnter = (e) => {
+    // Only trigger hover pause if it's an actual mouse
+    if (e.pointerType === 'mouse') {
+      setIsHovered(true);
+    }
+  };
+
+  const handlePointerLeave = (e) => {
+    if (e.pointerType === 'mouse') {
+      setIsHovered(false);
+    }
+    setIsDragging(false); // Failsafe
+  };
+
+  // --- MOUSE DRAG LOGIC ---
   const handleMouseDown = (e) => {
     setIsDragging(true);
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-    setIsHovered(false);
   };
 
   const handleMouseUp = () => {
@@ -81,33 +90,48 @@ export default function HeroCarousel() {
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Drag speed multiplier
+    const walk = (x - startX) * 1.5;
     scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // --- TOUCH SWIPE LOGIC (Mobile) ---
+  const handleTouchStart = () => {
+    setIsDragging(true);
+    setIsHovered(false); // Instantly kill any ghost hover states on mobile
+  };
+
+  const handleTouchEnd = () => {
+    // Give the mobile browser's momentum scrolling 2 seconds to completely glide to a stop before auto-scroll resumes
+    setTimeout(() => {
+      setIsDragging(false);
+    }, 2000); 
   };
 
   return (
     <div 
       className="w-full h-64 md:h-80 lg:h-96 overflow-hidden relative bg-orange-50/50 border-b-4 border-orange-200 group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
     >
       
       {/* Floating Left Arrow */}
       <button 
         onClick={() => scroll('left')}
-        className={`absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 bg-white/90 hover:bg-orange-500 text-orange-600 hover:text-white p-2 md:p-3 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+        className={`hidden md:block absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 bg-white/90 hover:bg-orange-500 text-orange-600 hover:text-white p-2 md:p-3 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
       >
         <ChevronLeft size={28} />
       </button>
 
-      {/* The scrolling track (No more snap, pure fluid drag/scroll) */}
+      {/* The scrolling track */}
       <div 
         ref={scrollRef}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex h-full w-full gap-4 px-4 items-center overflow-x-auto scroll-smooth ${isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'}`}
-        style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }} // Hides native scrollbar
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className={`flex h-full w-full gap-4 px-4 items-center overflow-x-auto touch-pan-x ${isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'}`}
+        style={{ msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }} 
       >
         {scrollImages.map((src, idx) => (
           <div 
@@ -117,7 +141,7 @@ export default function HeroCarousel() {
             <img 
               src={src} 
               alt={`Asramam view ${idx + 1}`} 
-              className="w-full h-full object-cover pointer-events-none" // pointer-events-none prevents image dragging ghost
+              className="w-full h-full object-cover pointer-events-none" 
               loading="lazy" 
               onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.classList.add('bg-orange-100'); }}
             />
@@ -128,7 +152,7 @@ export default function HeroCarousel() {
       {/* Floating Right Arrow */}
       <button 
         onClick={() => scroll('right')}
-        className={`absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 bg-white/90 hover:bg-orange-500 text-orange-600 hover:text-white p-2 md:p-3 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+        className={`hidden md:block absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 bg-white/90 hover:bg-orange-500 text-orange-600 hover:text-white p-2 md:p-3 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
       >
         <ChevronRight size={28} />
       </button>

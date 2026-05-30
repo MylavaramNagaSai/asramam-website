@@ -1,7 +1,87 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
+import { ChevronDown, ChevronRight, Menu, X, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+/* =========================================
+   LIVE TIMER COMPONENT (MOBILE PERFECT)
+   ========================================= */
+const EstablishmentTimer = () => {
+  const [timeElapsed, setTimeElapsed] = useState({
+    years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0
+  });
+
+  useEffect(() => {
+    // Establishment Date: December 23, 1934 (Midnight)
+    const startDate = new Date(1934, 11, 23);
+
+    const calculateTime = () => {
+      const now = new Date();
+      
+      let years = now.getFullYear() - startDate.getFullYear();
+      let months = now.getMonth() - startDate.getMonth();
+      let days = now.getDate() - startDate.getDate();
+      let hours = now.getHours() - startDate.getHours();
+      let minutes = now.getMinutes() - startDate.getMinutes();
+      let seconds = now.getSeconds() - startDate.getSeconds();
+
+      // Handle negative rollovers gracefully
+      if (seconds < 0) { seconds += 60; minutes--; }
+      if (minutes < 0) { minutes += 60; hours--; }
+      if (hours < 0) { hours += 24; days--; }
+      if (days < 0) {
+        months--;
+        const previousMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += previousMonth.getDate();
+      }
+      if (months < 0) { months += 12; years--; }
+
+      setTimeElapsed({ years, months, days, hours, minutes, seconds });
+    };
+
+    calculateTime();
+    const timerInterval = setInterval(calculateTime, 1000);
+
+    return () => clearInterval(timerInterval);
+  }, []);
+
+  return (
+    <div className="bg-orange-950 text-white py-1.5 px-2 md:py-2 md:px-4 w-full flex flex-col xl:flex-row justify-center items-center gap-0.5 md:gap-4 shadow-md z-50 relative border-b border-orange-800">
+      
+      {/* Label: Shortens to "Journey Since 1934:" on mobile to save space */}
+      <div className="flex items-center gap-1.5 text-orange-200/90 font-semibold text-[10px] md:text-sm tracking-wide uppercase">
+        <Clock size={14} className="animate-pulse text-orange-400 md:w-4 md:h-4" />
+        <span className="hidden sm:inline">Divine Journey Since 23 Dec 1934:</span>
+        <span className="sm:hidden">Journey Since 1934:</span>
+      </div>
+      
+      {/* Live Numbers: Uses responsive abbreviations (YRS -> Y) on mobile so it never wraps! */}
+      <div className="font-extrabold text-orange-400 text-xs sm:text-sm md:text-base flex justify-center items-center gap-1.5 sm:gap-2 md:gap-3 w-full sm:w-auto">
+        
+        <span>{timeElapsed.years}<span className="text-orange-100 font-semibold text-[9px] md:text-xs ml-0.5">Y<span className="hidden sm:inline">RS</span></span></span>
+        <span className="text-orange-700/60 text-[10px] md:text-sm">•</span>
+        
+        <span>{timeElapsed.months}<span className="text-orange-100 font-semibold text-[9px] md:text-xs ml-0.5">M<span className="hidden sm:inline">OS</span></span></span>
+        <span className="text-orange-700/60 text-[10px] md:text-sm">•</span>
+        
+        <span>{timeElapsed.days}<span className="text-orange-100 font-semibold text-[9px] md:text-xs ml-0.5">D<span className="hidden sm:inline">AYS</span></span></span>
+        <span className="text-orange-700/60 text-[10px] md:text-sm">•</span>
+        
+        <span>{timeElapsed.hours}<span className="text-orange-100 font-semibold text-[9px] md:text-xs ml-0.5">H<span className="hidden sm:inline">RS</span></span></span>
+        <span className="text-orange-700/60 text-[10px] md:text-sm">•</span>
+        
+        <span>{timeElapsed.minutes}<span className="text-orange-100 font-semibold text-[9px] md:text-xs ml-0.5">M<span className="hidden sm:inline">IN</span></span></span>
+        <span className="text-orange-700/60 text-[10px] md:text-sm">•</span>
+        
+        <span className="tabular-nums">
+          {String(timeElapsed.seconds).padStart(2, '0')}<span className="text-orange-100 font-semibold text-[9px] md:text-xs ml-0.5">S<span className="hidden sm:inline">EC</span></span>
+        </span>
+        
+      </div>
+      
+    </div>
+  );
+};
 
 /* =========================================
    DESKTOP COMPONENTS
@@ -248,30 +328,25 @@ export default function Navbar() {
         "Venka Mamba Samadhi (Bhakthuralu)"
       ] 
     },
-    { title: "Adhistana Mandiram", options: ["About the Mandiram", "Darshan Timings", "Special Rituals"] },
+    { title: "Adhistana Mandiram", options: ["About the Mandiram", "Darshan Timings"] },
     { title: "Library", options: ["Spiritual Books", "Audio Archives", "Video Discourses"] },
     { title: "Sri Viswa Mimamsa Monthly (Magazine)", options: [] },
     { title: "Events", options: ["Upcoming Festivals", "Monthly Calendar"] },
-    { title: "Donations", options: ["E-Hundi", "Gosala Trust", "Asramam Development","Maharshi Annaprasadam"] },
+    { title: "Donations", options: ["E-Hundi", "Gosala Trust","Maharshi Annaprasadam"] },
     { title: "About", options: ["Contact Us", "Committees", "Route Map"] },
-    { 
+    {
       title: "Gallery", 
-      options: [
-        {
-          label: "Satyananda Maharshi",
-          subOptions: ["Pics", "Videos"]
-        },
-        {
-          label: "Festivals",
-          subOptions: ["Pics", "Videos"]
-        },
-        "All Asramam Images"
-      ] 
+      options: ["All Asramam Images"] 
     }
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full shadow-lg bg-white">
+      
+      {/* =========================================
+          THE NEW LIVE TIMER BANNER
+          ========================================= */}
+      <EstablishmentTimer />
       
       {/* =========================================
           MOBILE TOP BAR

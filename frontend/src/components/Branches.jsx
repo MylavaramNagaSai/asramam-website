@@ -11,7 +11,7 @@ export default function Branches() {
       city: "Nellore (Headquarters)",
       name: "Sri Sathyanandha Asramam",
       address: "Inamadugu Village, Kovur Mandal, Nellore District, AP - 524137",
-      phone: "+91 98765 43210",
+      phone: "+91 94402 79712",
       image: "/main-complex.jpg" // Using your actual HQ image!
     },
     { id: 1, isHQ: false, city: "Mumbai", name: "Bhagavan Sri Satyananda Maharshi Bhakta Mandali", address: "Mumbai, Maharashtra" },
@@ -107,7 +107,7 @@ export default function Branches() {
               {/* HQ Extra Information Block */}
               {branch.isHQ && (
                 <p className="text-gray-700 text-sm lg:text-base leading-relaxed mb-6 border-l-4 border-orange-400 pl-4 bg-white/50 p-3 rounded-r-lg shadow-inner">
-                  Established in 1935 by Bhagavan Sree Satyananda Maharshi, the Inamadugu headquarters is a sprawling spiritual sanctuary. It houses the sacred Adhistana Mandiram, the monumental Dhyana Mandir, and serves as the epicenter for continuous Bhakti, Peace & Harmony.
+                  Established in 1934 by Bhagavan Sree Satyananda Maharshi, the Inamadugu headquarters is a sprawling spiritual sanctuary. It houses the sacred Adhistana Mandiram, the monumental Dhyana Mandir, and serves as the epicenter for continuous Bhakti, Peace & Harmony.
                 </p>
               )}
 

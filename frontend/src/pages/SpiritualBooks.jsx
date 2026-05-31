@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Download, Search, FileText, Award, Heart, Shield, HelpCircle } from 'lucide-react';
+import { BookOpen, Download, Search, FileText, Award, Heart, Shield, HelpCircle, Eye } from 'lucide-react';
 
 export default function SpiritualBooks() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -180,18 +180,25 @@ export default function SpiritualBooks() {
                 </p>
               </div>
 
-              {/* Action Sheet Layer with Premium CSS Tap Physics */}
-              <div className="mt-auto pt-2">
-                {/* Make sure all 53 files are inside a folder called "books" inside your public folder.
-                  E.g., public/books/BHAGAVADGEETA.pdf
-                */}
+              {/* NEW SPLIT BUTTON AREA: Preview and Download */}
+              <div className="mt-auto pt-2 flex items-center gap-2">
+                <a 
+                  href={`/books/${book.file}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-white border-2 border-orange-200 text-orange-600 font-bold text-xs sm:text-sm py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-orange-50 hover:border-orange-400 active:scale-[0.98] transition-all shadow-sm"
+                >
+                  <Eye size={16} />
+                  Preview
+                </a>
+                
                 <a 
                   href={`/books/${book.file}`}
                   download={book.file}
-                  className="w-full bg-gradient-to-br from-[#FFFBF7] to-orange-50 text-orange-900 border border-orange-200/60 font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 hover:from-orange-600 hover:to-amber-600 hover:text-white hover:border-transparent active:scale-[0.98] transition-all shadow-sm"
+                  className="flex-1 bg-gradient-to-br from-orange-500 to-amber-500 text-white font-bold text-xs sm:text-sm py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 hover:shadow-lg active:scale-[0.98] transition-all shadow-md border-2 border-transparent"
                 >
                   <Download size={16} />
-                  Download PDF
+                  Download
                 </a>
               </div>
             </motion.div>

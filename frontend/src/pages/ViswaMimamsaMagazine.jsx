@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Calendar, BookOpen, FileText, ChevronDown, Filter, Eye } from 'lucide-react';
+import { Download, Calendar, BookOpen, FileText, ChevronDown, Filter, Eye, Search } from 'lucide-react';
 import magazineData from '../data/magazineData.json'; 
 
 export default function ViswaMimamsaMagazine() {
@@ -9,6 +9,7 @@ export default function ViswaMimamsaMagazine() {
   const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => (endYear - i).toString());
 
   const [selectedYear, setSelectedYear] = useState('2024'); 
+  const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   
@@ -20,6 +21,7 @@ export default function ViswaMimamsaMagazine() {
     "September": 9, "October": 10, "November": 11, "December": 12
   };
 
+  // Close dropdown if user clicks outside of it
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -30,7 +32,20 @@ export default function ViswaMimamsaMagazine() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Supercharged efficient filtering engine
   const filteredMagazines = useMemo(() => {
+    if (searchQuery.trim() !== '') {
+      const query = searchQuery.toLowerCase();
+      return magazineData
+        .filter(mag => 
+          mag.year.toLowerCase().includes(query) ||
+          mag.monthDisplay.toLowerCase().includes(query) ||
+          mag.fileName.toLowerCase().includes(query)
+        )
+        .sort((a, b) => b.year.localeCompare(a.year)); // Newest first in search
+    }
+
+    // Default: Selected year sorted chronologically by month
     return magazineData
       .filter(mag => mag.year === selectedYear)
       .sort((a, b) => {
@@ -38,11 +53,12 @@ export default function ViswaMimamsaMagazine() {
         const firstMonthB = b.monthDisplay.split('-')[0];
         return (monthOrder[firstMonthA] || 99) - (monthOrder[firstMonthB] || 99);
       });
-  }, [selectedYear]);
+  }, [selectedYear, searchQuery]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
       
+      {/* Title Area */}
       <h1 className="text-3xl md:text-5xl font-extrabold text-orange-950 flex items-center justify-center gap-3 md:gap-4 mb-4 glow-text text-center">
         <span className="text-orange-600 text-4xl md:text-5xl">ॐ</span>
         Sri Viswa Mimamsa Monthly
@@ -50,22 +66,35 @@ export default function ViswaMimamsaMagazine() {
       </h1>
       
       <p className="text-center text-orange-800/80 italic font-medium mb-10 border-b-2 border-orange-200 pb-6 max-w-3xl mx-auto text-base md:text-lg">
-        The official magazine of Sri Satyanandasramam. Select a year below to read or download the sacred monthly publications dating back to November 1947.
+        The official magazine of Sri Satyanandasramam. Search or select a year below to read the sacred monthly publications dating back to November 1947.
       </p>
 
-      {/* CUSTOM ANIMATED DROPDOWN PANEL */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-orange-100 mb-12 max-w-md mx-auto text-center relative z-20 mt-4">
-        <label className="text-sm font-bold text-orange-800 tracking-wide uppercase flex items-center justify-center gap-2 mb-3">
-          <Calendar size={18} /> Select Archive Year
-        </label>
+      {/* LUXURY CONTROL PANEL */}
+      <div className="bg-white rounded-3xl p-5 md:p-6 shadow-xl border border-orange-100 mb-8 max-w-5xl mx-auto flex flex-col md:flex-row gap-4 items-center relative z-20">
         
-        <div className="relative w-full" ref={dropdownRef}>
+        {/* Global Smart Search */}
+        <div className="relative w-full flex-1">
+          <Search className="absolute left-4 top-3.5 text-orange-600/50" size={20} />
+          <input 
+            type="text"
+            placeholder="Search across 80 years (e.g., 'October 1999', 'Special')..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-12 pr-4 py-3 bg-orange-50/50 border border-orange-100 rounded-2xl text-orange-950 placeholder-orange-900/40 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:bg-white transition-all text-sm md:text-base font-medium shadow-inner"
+          />
+        </div>
+
+        {/* Animated Dropdown Panel */}
+        <div className="relative w-full md:w-64" ref={dropdownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="w-full flex items-center justify-between bg-orange-50 border-2 border-orange-200 text-orange-950 rounded-xl px-6 py-4 font-black text-xl focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-200/50 transition-all shadow-inner"
+            className="w-full flex items-center justify-between bg-orange-50 border-2 border-orange-200 text-orange-950 rounded-2xl px-6 py-3 font-black text-lg focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-200/50 transition-all shadow-inner"
           >
-            <span>{selectedYear}</span>
-            <ChevronDown className={`text-orange-600 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} size={24} />
+            <span className="flex items-center gap-2">
+              <Calendar size={18} className="text-orange-600" />
+              {selectedYear}
+            </span>
+            <ChevronDown className={`text-orange-600 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} size={20} />
           </button>
 
           <AnimatePresence>
@@ -77,19 +106,19 @@ export default function ViswaMimamsaMagazine() {
                 transition={{ duration: 0.2 }}
                 className="absolute left-0 right-0 top-full mt-2 bg-white border border-orange-200 rounded-2xl shadow-2xl overflow-hidden z-30"
               >
-                <div className="max-h-80 overflow-y-auto p-3 grid grid-cols-3 sm:grid-cols-4 gap-2 bg-gradient-to-b from-white to-orange-50/30 custom-scrollbar">
+                <div className="max-h-80 overflow-y-auto p-3 grid grid-cols-3 gap-2 bg-gradient-to-b from-white to-orange-50/30 custom-scrollbar">
                   {years.map(y => {
                     const hasData = magazineData.some(m => m.year === y);
-                    
                     return (
                       <button
                         key={y}
                         onClick={() => {
                           setSelectedYear(y);
+                          setSearchQuery(''); // Clear search when picking a year
                           setIsDropdownOpen(false);
                         }}
                         className={`py-3 rounded-xl text-sm font-black transition-all duration-200 ${
-                          selectedYear === y 
+                          selectedYear === y && !searchQuery
                             ? 'bg-gradient-to-br from-orange-500 to-amber-600 text-white shadow-md scale-105' 
                             : hasData 
                               ? 'text-orange-900 bg-orange-50/50 hover:bg-orange-100 hover:text-orange-950 hover:scale-105 border border-orange-100'
@@ -107,6 +136,16 @@ export default function ViswaMimamsaMagazine() {
         </div>
       </div>
 
+      {/* Dynamic Results Header */}
+      <div className="flex items-center justify-center mb-8 relative z-10">
+        <div className="bg-orange-100/80 text-orange-950 font-bold px-6 py-2.5 rounded-full text-sm border border-orange-200 shadow-sm">
+          {searchQuery 
+            ? `Searching all archives: Found ${filteredMagazines.length} matches` 
+            : `Publications from ${selectedYear}: ${filteredMagazines.length} Editions`
+          }
+        </div>
+      </div>
+
       {/* Magazine Grid Canvas */}
       <motion.div 
         layout
@@ -114,59 +153,64 @@ export default function ViswaMimamsaMagazine() {
       >
         <AnimatePresence mode='popLayout'>
           {filteredMagazines.length > 0 ? (
-            filteredMagazines.map((mag, index) => (
-              <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                key={`${mag.fileName}-${index}`}
-                className="bg-white rounded-2xl border border-orange-100 shadow-md p-5 flex flex-col justify-between group hover:shadow-xl hover:border-orange-400 transition-all duration-300"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4 border-b border-orange-50 pb-3">
-                    <div className="p-3 bg-gradient-to-br from-orange-100 to-amber-50 rounded-xl text-orange-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
-                      <BookOpen size={24} />
+            filteredMagazines.map((mag, index) => {
+              // Extract pure filename (e.g., "1947/December 1947.pdf" -> "December 1947.pdf")
+              const cleanFileName = mag.fileName.split('/').pop();
+              
+              return (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  key={`${mag.fileName}-${index}`}
+                  className="bg-white rounded-2xl border border-orange-100 shadow-md p-5 flex flex-col justify-between group hover:shadow-xl hover:border-orange-400 transition-all duration-300"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4 border-b border-orange-50 pb-3">
+                      <div className="p-3 bg-gradient-to-br from-orange-100 to-amber-50 rounded-xl text-orange-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                        <BookOpen size={24} />
+                      </div>
+                      <span className="text-xs font-extrabold tracking-widest px-3 py-1 rounded-full uppercase border bg-orange-50 text-orange-800 border-orange-200">
+                        {mag.year}
+                      </span>
                     </div>
-                    <span className="text-xs font-extrabold tracking-widest px-3 py-1 rounded-full uppercase border bg-orange-50 text-orange-800 border-orange-200">
-                      {mag.year}
-                    </span>
+
+                    <h3 className="text-xl font-bold text-orange-950 mb-2 leading-snug group-hover:text-orange-600 transition-colors">
+                      {mag.monthDisplay} Magazine
+                    </h3>
+                    
+                    <p className="text-xs font-mono text-gray-400 truncate mb-6" title={cleanFileName}>
+                      <FileText size={12} className="inline mr-1 -mt-0.5" />
+                      {cleanFileName}
+                    </p>
                   </div>
 
-                  <h3 className="text-xl font-bold text-orange-950 mb-2 leading-snug group-hover:text-orange-600 transition-colors">
-                    {mag.monthDisplay} Magazine
-                  </h3>
-                  
-                  <p className="text-xs font-mono text-gray-400 truncate mb-6" title={mag.fileName}>
-                    <FileText size={12} className="inline mr-1 -mt-0.5" />
-                    File: {mag.fileName}
-                  </p>
-                </div>
-
-                {/* NEW SPLIT BUTTON AREA */}
-                <div className="mt-auto pt-2 flex items-center gap-2">
-                  <a 
-                    href={`${baseUrl}VM_Books/${mag.fileName}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 bg-white border-2 border-orange-200 text-orange-600 font-bold text-sm py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-orange-50 hover:border-orange-400 active:scale-[0.98] transition-all shadow-sm"
-                  >
-                    <Eye size={16} />
-                    Preview
-                  </a>
-                  
-                  <a 
-                    href={`${baseUrl}VM_Books/${mag.fileName}`}
-                    download={`${mag.monthDisplay} ${mag.year} Magazine.pdf`}
-                    className="flex-1 bg-gradient-to-br from-orange-500 to-amber-500 text-white font-bold text-sm py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 hover:shadow-lg active:scale-[0.98] transition-all shadow-md border-2 border-transparent"
-                  >
-                    <Download size={16} />
-                    Download
-                  </a>
-                </div>
-              </motion.div>
-            ))
+                  {/* SPLIT BUTTON AREA */}
+                  <div className="mt-auto pt-2 flex items-center gap-2">
+                    <a 
+                      href={`${baseUrl}VM_Books/${mag.fileName}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-white border-2 border-orange-200 text-orange-600 font-bold text-xs sm:text-sm py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-orange-50 hover:border-orange-400 active:scale-[0.98] transition-all shadow-sm"
+                    >
+                      <Eye size={16} />
+                      Preview
+                    </a>
+                    
+                    <a 
+                      href={`${baseUrl}VM_Books/${mag.fileName}`}
+                      download={cleanFileName}
+                      className="flex-1 bg-gradient-to-br from-orange-500 to-amber-500 text-white font-bold text-xs sm:text-sm py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 hover:shadow-lg active:scale-[0.98] transition-all shadow-md border-2 border-transparent"
+                    >
+                      <Download size={16} />
+                      Download
+                    </a>
+                  </div>
+                </motion.div>
+              );
+            })
           ) : (
              <motion.div 
                initial={{ opacity: 0 }}
@@ -175,7 +219,7 @@ export default function ViswaMimamsaMagazine() {
              >
                <Filter size={40} className="mx-auto text-orange-300 mb-3" />
                <p className="text-orange-950 font-bold text-lg">Archive Pending</p>
-               <p className="text-gray-500 text-sm mt-1 px-4">The digital archive for {selectedYear} is currently being digitized and is not yet available.</p>
+               <p className="text-gray-500 text-sm mt-1 px-4">The digital archive for this query is currently being digitized and is not yet available.</p>
              </motion.div>
           )}
         </AnimatePresence>

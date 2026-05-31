@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Calendar, BookOpen, FileText, ChevronDown, Filter } from 'lucide-react';
+import { Download, Calendar, BookOpen, FileText, ChevronDown, Filter, Eye } from 'lucide-react';
 import magazineData from '../data/magazineData.json'; 
 
 export default function ViswaMimamsaMagazine() {
@@ -53,7 +53,7 @@ export default function ViswaMimamsaMagazine() {
         The official magazine of Sri Satyanandasramam. Select a year below to read or download the sacred monthly publications dating back to November 1947.
       </p>
 
-      {/* CUSTOM ANIMATED DROPDOWN PANEL - CHANGED TO z-20 AND ADDED mt-4 */}
+      {/* CUSTOM ANIMATED DROPDOWN PANEL */}
       <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-orange-100 mb-12 max-w-md mx-auto text-center relative z-20 mt-4">
         <label className="text-sm font-bold text-orange-800 tracking-wide uppercase flex items-center justify-center gap-2 mb-3">
           <Calendar size={18} /> Select Archive Year
@@ -75,7 +75,6 @@ export default function ViswaMimamsaMagazine() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                // ADDED z-30 HERE TO KEEP THE MENU ABOVE THE BOOKS
                 className="absolute left-0 right-0 top-full mt-2 bg-white border border-orange-200 rounded-2xl shadow-2xl overflow-hidden z-30"
               >
                 <div className="max-h-80 overflow-y-auto p-3 grid grid-cols-3 sm:grid-cols-4 gap-2 bg-gradient-to-b from-white to-orange-50/30 custom-scrollbar">
@@ -108,7 +107,7 @@ export default function ViswaMimamsaMagazine() {
         </div>
       </div>
 
-      {/* Magazine Grid Canvas - KEPT AT z-10 */}
+      {/* Magazine Grid Canvas */}
       <motion.div 
         layout
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 relative z-10"
@@ -145,14 +144,25 @@ export default function ViswaMimamsaMagazine() {
                   </p>
                 </div>
 
-                <div className="mt-auto pt-2">
+                {/* NEW SPLIT BUTTON AREA */}
+                <div className="mt-auto pt-2 flex items-center gap-2">
+                  <a 
+                    href={`${baseUrl}VM_Books/${mag.fileName}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-white border-2 border-orange-200 text-orange-600 font-bold text-sm py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-orange-50 hover:border-orange-400 active:scale-[0.98] transition-all shadow-sm"
+                  >
+                    <Eye size={16} />
+                    Preview
+                  </a>
+                  
                   <a 
                     href={`${baseUrl}VM_Books/${mag.fileName}`}
                     download={`${mag.monthDisplay} ${mag.year} Magazine.pdf`}
-                    className="w-full bg-gradient-to-br from-orange-500 to-amber-500 text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 hover:shadow-lg active:scale-[0.98] transition-all shadow-md"
+                    className="flex-1 bg-gradient-to-br from-orange-500 to-amber-500 text-white font-bold text-sm py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 hover:shadow-lg active:scale-[0.98] transition-all shadow-md border-2 border-transparent"
                   >
-                    <Download size={18} />
-                    Download Edition
+                    <Download size={16} />
+                    Download
                   </a>
                 </div>
               </motion.div>
